@@ -3,9 +3,10 @@ import { Navbar, Nav, NavDropdown, Button, Jumbotron } from 'react-bootstrap';
 import './App.css';
 import {productItems} from './productItems.js';
 import Detail from './Detail.js';
+import Cart from './Cart.js';
 import axios from 'axios';
 
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, useHistory } from 'react-router-dom';
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/products">Products</Nav.Link>
-            <Nav.Link as={Link} to="/detail/0">Detail</Nav.Link>
+            <Nav.Link as={Link} to="/detail/">Detail</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -46,12 +47,13 @@ function App() {
         </Jumbotron>
 
         <div className="container">
-        <div className="row">
-          {
-            product.map((a, i)=>{
-              return <Card product={product[i]} key={i}/> 
-            })
-          }
+          <div className="row">
+            {
+              product.map((a, i)=>{
+                return <Card product={product[i]} i={i} key={product.id}/> 
+              })
+            }
+          </div>
         </div>
         {/* <button className="btn btn-primary" onClick={()=>{
 
@@ -63,11 +65,14 @@ function App() {
           .catch(()=>{})
 
         }}>더보기</button> */}
-      </div>
       </Route>
-      
+
       <Route path="/detail/:id">
         <Detail product={product}/>
+      </Route>
+
+      <Route path="/cart">
+        <Cart></Cart>
       </Route>
 
     </div>
@@ -75,8 +80,11 @@ function App() {
 }
 
 function Card(props){
+
+  let history = useHistory();
   return (
-    <div className="col-md-4">
+    <div className="col-md-4" onClick={()=>{ history.push('/detail/' + props.product.id) }}>
+
       <img src={ props.product.coverImage} width="100%"/>
       <h4>{ props.product.title}</h4>
       <p>{ props.product.price}</p>

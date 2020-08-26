@@ -15,20 +15,20 @@ $main_color : #ff0000;
     color : $main_color;
 }
 
-// .my-alert{
-//     background: #eeeeee;
-//     padding: 20px;
-//     border-radius: 5px;
-// }
+.my-alert{
+    background: #eeeeee;
+    padding: 20px;
+    border-radius: 5px;
+}
 
-// .my-alert p{
-//     margin-bottom: 0;
-// }
+.my-alert p{
+    margin-bottom: 0;
+}
 
-// .my-alert2{
-//     @extend .my-alert;
-//     background: #ffe591;
-// }
+.my-alert2{
+    @extend .my-alert;
+    background: #ffe591;
+}
 
 
 // div.container {

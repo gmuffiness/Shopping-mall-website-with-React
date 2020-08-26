@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Nav } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss';
@@ -40,6 +41,9 @@ function Detail(props) {
 
                     <button className="btn btn-danger" onClick={()=>{
 
+                        props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1} });
+                        history.push('/cart');
+
                     }}>주문하기</button>
                     &nbsp;
                     <button className="btn btn-danger" onClick={()=>{
@@ -50,10 +54,10 @@ function Detail(props) {
 
             <Nav className="mt-5" variant="tabs" defaultActiveKey="link-0">
                 <Nav.Item>
-                    <Nav.Link eventKey="link-0" onClick={()=>{ setSwitchtab(false); setPreesedtab(0) }}>Active</Nav.Link>
+                    <Nav.Link eventKey="link-0" onClick={()=>{ setSwitchtab(false); setPreesedtab(0) }}>상품설명</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link eventKey="link-1" onClick={()=>{ setPreesedtab(1) }}>Option 2</Nav.Link>
+                    <Nav.Link eventKey="link-1" onClick={()=>{ setPreesedtab(1) }}>배송정보</Nav.Link>
                 </Nav.Item>
             </Nav>
                 
@@ -81,4 +85,14 @@ function TabContent(props){
 
 }
 
-export default Detail;
+function state_to_props(state){
+    return {
+        state : state.reducer,
+        state_alert : state.reducer2,
+        // title : state[0].name
+    }
+}
+
+export default connect(state_to_props)(Detail)
+
+// export default Detail;
