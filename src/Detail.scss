@@ -1,0 +1,41 @@
+@import './_reset.scss';
+
+$main_color : #ff0000;
+
+.opacity-enter{
+    opacity: 0;
+}
+
+.opacity-enter-active{
+    opacity: 1;
+    transition: all 500ms;
+}
+
+.red{
+    color : $main_color;
+}
+
+// .my-alert{
+//     background: #eeeeee;
+//     padding: 20px;
+//     border-radius: 5px;
+// }
+
+// .my-alert p{
+//     margin-bottom: 0;
+// }
+
+// .my-alert2{
+//     @extend .my-alert;
+//     background: #ffe591;
+// }
+
+
+// div.container {
+//     h4 {
+//         color: blue;
+//     }
+//     p {
+//         color: green;
+//     }
+// }
