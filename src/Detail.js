@@ -9,19 +9,17 @@ import { CSSTransition } from 'react-transition-group';
 
 function Detail(props) {
     
-    let [alert, setAlert] = useState(true); 
-    let [input, setInput] = useState('');
-
+    // let [alert, setAlert] = useState(true); 
     let [pressedtab, setPreesedtab] = useState(0);
     let [switchtab, setSwitchtab] = useState(true);
 
 
-    useEffect(()=>{
-        let timer = setTimeout(() => {
-            setAlert(false)
-        },2000);
-        return ()=>{ clearTimeout(timer) }
-    },[alert]);
+    // useEffect(()=>{
+    //     let timer = setTimeout(() => {
+    //         setAlert(false)
+    //     },2000);
+    //     return ()=>{ clearTimeout(timer) }
+    // },[alert]);
 
     let { id } = useParams();
     let history = useHistory();
@@ -41,7 +39,7 @@ function Detail(props) {
 
                     <button className="btn btn-danger" onClick={()=>{
 
-                        props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1} });
+                        props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price} });
                         history.push('/cart');
 
                     }}>장바구니</button>

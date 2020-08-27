@@ -19,15 +19,21 @@ function reducer(state = init_val, action){
   if ( action.type === 'product_add'){
     
     let found = state.findIndex((a)=>{ return a.id === action.payload.id }); // init_val에 있는 id값과 눌렀을때 받은 id값이 일치하는 index
-    console.log(state)
+    // console.log(state)
     if ( found >= 0  ){
       let copy = [...state];
       copy[found].quan++;
       return copy    
     } else {
-      let copy = [...state];
-      copy.push(action.payload);
-      return copy
+      if (state.length > 2){
+        alert("장바구니에는 최대 3개의 상품이 담길 수 있습니다.");
+        return state
+      } else{
+        let copy = [...state];
+        copy.push(action.payload);
+        return copy
+      }
+      
     }
 
   } else if ( action.type === 'quan_plus'){
@@ -39,9 +45,16 @@ function reducer(state = init_val, action){
   } else if ( action.type === 'quan_minus'){
 
     let copy = [...state];
-    copy[action.payload.i].quan--;
-    return copy
+    let found = state.findIndex((a)=>{ return a.id === action.payload.id });
 
+    if (copy[action.payload.i].quan > 1 ){
+      copy[action.payload.i].quan--;
+      return copy
+    } else{
+      copy.splice(found,1);
+      return copy
+    }
+  
   } else{
     return state 
   }
@@ -67,7 +80,25 @@ function reducer2(state = init_btn, action){
   }
 }
 
-let store = createStore(combineReducers({reducer, reducer2}));
+let init_sum = 0;
+
+function reducer3(state = init_sum, action){
+  if ( action.type === "checked" ){
+
+    if (action.payload.checked){
+      state = state + action.payload.price * action.payload.quan;
+      return state
+    } else{
+
+      state = state - action.payload.price * action.payload.quan;
+      return state
+    }
+  } else{
+    return state
+  }
+}
+
+let store = createStore(combineReducers({reducer, reducer2, reducer3}));
 
 ReactDOM.render(
   <React.StrictMode>
