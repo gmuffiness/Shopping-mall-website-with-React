@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Table} from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 function Cart(props){
+
+    let [clobtn, setClobtn] = useState(true);
+
     return (
         <div>
             <Table responsive>
@@ -30,18 +33,12 @@ function Cart(props){
                             )
                         })
                     }
-                    {/* <tr>
-                    <td>2</td>
-                    {Array.from({ length: 4 }).map((_, index) => (
-                        <td key={index}>Table cell {index}</td>
-                    ))}
-                    </tr> */}
                 </tbody>
             </Table>
-            { props.state_alert === true
+            { clobtn === true
                 ? ( <div className="my-alert2">
                         <p>지금 구매하시면 20% 할인됩니다!</p>
-                        <button onClick={()=>{props.dispatch({ type : 'clo_btn' }) }}>닫기</button>
+                        <button onClick={()=>{ setClobtn(false) }}>닫기</button>
                     </div> )
                 : null
             }
@@ -52,8 +49,7 @@ function Cart(props){
 function state_to_props(state){
     return {
         state : state.reducer,
-        state_alert : state.reducer2,
-        // title : state[0].name
+        // state_alert : state.reducer2,
     }
 }
 

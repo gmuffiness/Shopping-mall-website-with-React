@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, NavDropdown, Button, Jumbotron } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Button, Jumbotron} from 'react-bootstrap';
 import './App.css';
 import {productItems} from './productItems.js';
 import Detail from './Detail.js';
 import Cart from './Cart.js';
+import Products from './Products.js';
+import Pagination from './Pagination.js';
 import axios from 'axios';
 
 import { Link, Route, useHistory } from 'react-router-dom';
@@ -12,8 +14,25 @@ function App() {
 
   let [product, setProduct] = useState(productItems);
 
+	const [currentPage, setCurrentPage] = useState(1); 
+  const [productsPerPage] = useState(5); 
+  
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = product.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  function desc_sort(product){
+    
+    const result = product.sort((a, b) => b.score > a.score ? 1 : -1)
+    return result
+  
+  }
+
   return (
     <div className="App">
+      {desc_sort(product)[0].score}
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/">클래스 shop</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -34,7 +53,7 @@ function App() {
       </Navbar>
 
 
-      <Route exact path="/products">
+      <Route exact path="/">
         
         <Jumbotron className="jumbo_background">
           <h1>10% Season off</h1>
@@ -56,24 +75,22 @@ function App() {
             }
           </div>
         </div>
-        {/* <button className="btn btn-primary" onClick={()=>{
 
-          axios.get('')
-          .then((result)=>{
-            setProduct( [...product, ...result.data]);
-
-          })
-          .catch(()=>{})
-
-        }}>더보기</button> */}
       </Route>
+
+      <Route exact path="/products">
+
+        <Products product={currentProducts} />
+        <Pagination productsPerPage={productsPerPage} totalProducts={product.length} paginate={paginate} />
+      </Route>
+
 
       <Route path="/detail/:id">
         <Detail product={product}/>
       </Route>
 
       <Route path="/cart">
-        <Cart></Cart>
+        <Cart />
       </Route>
 
     </div>
@@ -86,9 +103,9 @@ function Card(props){
   return (
     <div className="col-md-4" onClick={()=>{ history.push('/detail/' + props.product.id) }}>
 
-      <img src={ props.product.coverImage} width="100%"/>
+      <img src={ props.product.coverImage} width="100%" height="70%"/>
       <h4>{ props.product.title}</h4>
-      <p>{ props.product.price}</p>
+      <p>{ props.product.price}원</p>
     </div>
   )
 }

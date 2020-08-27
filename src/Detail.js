@@ -32,7 +32,7 @@ function Detail(props) {
             
             <div className="row">
                 <div className="col-md-6">
-                    <img src="https://cdn.class101.net/images/1ea53728-c3f7-4fe9-a485-88c9a130b3b4" width="100%" />
+                    <img src={ target_item.coverImage } width="100%" />
                 </div>
                 <div className="col-md-6 mt-4">
                     <h4 className="pt-5">{target_item.title}</h4>
@@ -44,7 +44,7 @@ function Detail(props) {
                         props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1} });
                         history.push('/cart');
 
-                    }}>주문하기</button>
+                    }}>장바구니</button>
                     &nbsp;
                     <button className="btn btn-danger" onClick={()=>{
                         history.goBack(); // history.push('/')

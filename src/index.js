@@ -8,22 +8,22 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
 import { createStore, combineReducers} from 'redux';
+import { useState } from 'react';
 
 let init_val = [
-  // {id : 0, name : "멋진신발", quan : 2},
-  // {id : 1, name : "멋진신발2", quan : 4},
-]
+  // {id : 0, name : "test", quan : 2},
+  // {id : 1, name : "test2", quan : 4},
+];
 
 function reducer(state = init_val, action){
   if ( action.type === 'product_add'){
     
-    let found = state.findIndex((a)=>{ return a.id === action.payload.id });
-    console.log(found)
+    let found = state.findIndex((a)=>{ return a.id === action.payload.id }); // init_val에 있는 id값과 눌렀을때 받은 id값이 일치하는 index
+    console.log(state)
     if ( found >= 0  ){
       let copy = [...state];
       copy[found].quan++;
-      return copy
-    
+      return copy    
     } else {
       let copy = [...state];
       copy.push(action.payload);
@@ -31,7 +31,7 @@ function reducer(state = init_val, action){
     }
 
   } else if ( action.type === 'quan_plus'){
-
+    
     let copy = [...state];
     copy[action.payload.i].quan++; // 여기서 payload 는 a.id => B9vUv0E0ibc0X55kVVLr 이런 문자열일 것.
     return copy
@@ -47,17 +47,23 @@ function reducer(state = init_val, action){
   }
 }
 
-let init_alert = true;
+let init_btn = [
+  // {id : 0, name : "test", in_cart : false},
+  // {id : 1, name : "test2", in_cart : true},
+]; // 담기
 
-function reducer2(state = init_alert, action){
-  if ( action.type === 'clo_btn'){
+function reducer2(state = init_btn, action){
+  if ( action.type === 'btn_pressed'){
 
-    // let copy = [...state];
-    state = false;
-    return state
+    let found2 = state.findIndex((a)=>{ return a.id === action.payload.id });
 
+    if ( found2 >= 0  ){
+      return false
+    } else{
+      return state
+    }
   } else{
-  return state
+    return state
   }
 }
 
