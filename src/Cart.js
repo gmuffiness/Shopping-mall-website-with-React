@@ -1,11 +1,34 @@
 import React, { useState } from 'react';
 import {Table} from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { coupons } from './coupons.js';
 
 function Cart(props){
 
     let [clobtn, setClobtn] = useState(true);
+    let [coupon, setCoupon] = useState(coupons);
+    let [couponbtn,setCouponbtn] = useState("none");
+    let [fin_price, setFin_price] = useState(0);
 
+    function handleChange(e, total) {
+        if (e.target.value == "none"){
+            setCouponbtn("none")
+        } else if(e.target.value == "discountRate"){
+            setCouponbtn("discountRate")
+        } else{
+            setCouponbtn("discountAmount")
+        }
+      }
+
+    function final_price(couponbtn, total){
+        if (couponbtn === "none"){
+            return total
+        } else if (couponbtn === "discountRate"){
+            return total * 0.9
+        } else{
+            return total - 10000
+        }
+    }
     return (
         <div>
             <Table responsive>
@@ -37,15 +60,23 @@ function Cart(props){
                                             let checked = e.target.checked;
                                             props.dispatch({ type: 'checked', payload : {id : a.id, i : i, price : a.price, quan : a.quan, checked : checked }})
                                          }}/>
-                                    </td>  
-                                    {/* 체크박스 체크가 되어있는 상품들의 각 가격 x 수량의 총합  */}
+                                    </td>
                                 </tr>
                             )
                         })
                     }
                 </tbody>
             </Table>
-            <p>최종 결제 금액: {props.state_clicked}</p>
+            
+            <select onChange={(e)=>{ handleChange(e, props.state_clicked) }}>
+                <option value="none">--쿠폰--</option>
+                <option value="discountRate">{coupon[0].title}</option>
+                <option value="discountAmount">{coupon[1].title}</option>
+                
+            </select>
+
+            <p>최종 결제 금액: { final_price( couponbtn, props.state_clicked ) }</p>
+
             <button onClick= {()=>{}}> 결제하기</button>
             { clobtn === true
                 ? ( <div className="my-alert2">

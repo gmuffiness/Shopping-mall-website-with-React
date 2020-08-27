@@ -23,7 +23,7 @@ function Detail(props) {
 
     let { id } = useParams();
     let history = useHistory();
-    let target_item = props.product.find(x => x.id == id);
+    let target_item = props.product.find(x => x.id === id);
 
     return (
         <div className="container">
@@ -39,7 +39,9 @@ function Detail(props) {
 
                     <button className="btn btn-danger" onClick={()=>{
 
-                        props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price} });
+                        let flag = false;
+
+                        props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price, flag : flag} });
                         history.push('/cart');
 
                     }}>장바구니</button>
@@ -86,7 +88,6 @@ function TabContent(props){
 function state_to_props(state){
     return {
         state : state.reducer,
-        state_alert : state.reducer2,
         // title : state[0].name
     }
 }
