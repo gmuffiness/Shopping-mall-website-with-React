@@ -19,7 +19,7 @@ function reducer(state = init_val, action){
   if ( action.type === 'product_add'){
     
     let found = state.findIndex((a)=>{ return a.id === action.payload.id }); // init_val에 있는 id값과 눌렀을때 받은 id값이 일치하는 index
-    // console.log(state)
+
     if ( found >= 0  ){
       let copy = [...state];
       copy[found].quan++;
@@ -33,7 +33,7 @@ function reducer(state = init_val, action){
       } else{
         let copy = [...state];
         copy.push(action.payload);
-        // copy[found].flag = true;
+
         return copy
       }
       
@@ -63,22 +63,10 @@ function reducer(state = init_val, action){
   }
 }
 
-let init_btn = false;
-
-function reducer2(state = init_btn, action){
-  if( 1 > 3 ){
-    console.log(init_val)
-    state = true;
-    return state
-  } else{
-    return state
-  }
-}
-
 let flag = false;
 let init_sum = 0;
 
-function reducer3(state = init_sum, action){
+function reducer2(state = init_sum, action){
 
   if ( action.type === "checked" ){
 
@@ -96,7 +84,7 @@ function reducer3(state = init_sum, action){
       }
       
     } else{
-      console.log("flag2")
+      flag = false;
       if (action.payload.coupon){
         state = state - action.payload.price * action.payload.quan;
         return state
@@ -137,7 +125,7 @@ function reducer3(state = init_sum, action){
 }
 
 
-let store = createStore(combineReducers({reducer, reducer2, reducer3}));
+let store = createStore(combineReducers({reducer, reducer2}));
 
 ReactDOM.render(
   <React.StrictMode>

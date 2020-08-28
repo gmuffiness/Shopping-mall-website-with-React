@@ -8,8 +8,18 @@
   text-align: center;
 }
 
+.head{
+  background-color: rgba( 255, 255, 0, 0.7 );
+  background-position: center center;
+  color: black;
+}
 
-.my-way {
+.head_p{
+  background-color: rgba( 255, 255, 0, 0.7 );
+  color: black;
+}
+
+.simple-pagination {
   display: inline-block;
   border: 2px solid black;
   padding: 15px 20px 15px 20px;

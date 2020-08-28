@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, NavDropdown, Button, Jumbotron} from 'react-bootstrap';
+import { Navbar, Nav, Button, Jumbotron} from 'react-bootstrap';
 import './App.css';
 import {productItems} from './productItems.js';
-import Detail from './Detail.js';
-import Cart from './Cart.js';
-import Products from './Products.js';
-import Pagination from './Pagination.js';
-import axios from 'axios';
+import Detail from './components/Detail.js';
+import Cart from './components/Cart.js';
+import Products from './components/Products.js';
+import Pagination from './components/Pagination.js';
 
 import { Link, Route, useHistory } from 'react-router-dom';
 
@@ -34,20 +33,12 @@ function App() {
     <div className="App">
       {console.log(desc_sort(product)[0].score)}
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">클래스 shop</Navbar.Brand>
+        <Navbar.Brand href="/">CLASS101</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/products">Products</Nav.Link>
-            {/* <Nav.Link as={Link} to="/detail/">Detail</Nav.Link> */}
             <Nav.Link as={Link} to="/cart/">Cart</Nav.Link>
-            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -56,10 +47,10 @@ function App() {
       <Route exact path="/">
         
         <Jumbotron className="jumbo_background">
-          <h1>10% Season off</h1>
-          <p>
-            This is a simple hero unit, a simple jumbotron-style component for calling
-            extra attention to featured content or information.
+          <h1 className="head">인기 클래스만 모아 역대급 클래스로!</h1>
+          <p className="head_p">
+            단 5일 동안만 공개
+            지금 바로 확인해보세요!
           </p>
           <p>
             <Button variant="primary">Learn more</Button>
