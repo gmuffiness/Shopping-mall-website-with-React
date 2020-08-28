@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter } from 'react-router-dom';
-
 import { Provider } from 'react-redux';
 import { createStore, combineReducers} from 'redux';
 
@@ -40,13 +39,13 @@ function reducer(state = init_val, action){
       
     }
 
-  } else if ( action.type === 'quan_plus'){
-    
+  } else if ( action.type === 'quan_plus' ){
+
     let copy = [...state];
     copy[action.payload.i].quan++; // 여기서 payload 는 a.id => B9vUv0E0ibc0X55kVVLr 이런 문자열일 것.
     return copy
 
-  } else if ( action.type === 'quan_minus'){
+  } else if ( action.type === 'quan_minus' ){
 
     let copy = [...state];
     let found = state.findIndex((a)=>{ return a.id === action.payload.id });
@@ -76,25 +75,67 @@ function reducer2(state = init_btn, action){
   }
 }
 
-
+let flag = false;
 let init_sum = 0;
 
 function reducer3(state = init_sum, action){
+
   if ( action.type === "checked" ){
 
     if (action.payload.checked){
-      state = state + action.payload.price * action.payload.quan;
-      return state
-    
+      flag = true;
+      console.log("flag")
+      if (action.payload.coupon){
+        state = state + action.payload.price * action.payload.quan;
+        console.log(state)
+        return state
+      } else{
+        state = state + action.payload.price * action.payload.quan;
+        console.log(state)
+        return state
+      }
+      
     } else{
-      state = state - action.payload.price * action.payload.quan;
+      console.log("flag2")
+      if (action.payload.coupon){
+        state = state - action.payload.price * action.payload.quan;
+        return state
+
+      } else{
+        state = state - action.payload.price * action.payload.quan;
+        return state
+      }
+    }
+
+  } else if( action.type === 'quan_plus' ){
+    console.log(flag)
+    if (flag){
+      console.log("flag4");
+      state += action.payload.price;
+      return state
+
+    } else {
+      return state
+    }
+
+  } else if( action.type === 'quan_minus' ){
+    
+    console.log(flag)
+    if (flag){
+      console.log("flag4");
+      state -= action.payload.price;
+      return state
+
+    } else {
       return state
     }
 
   } else{
+    console.log("flag5")
     return state
   }
 }
+
 
 let store = createStore(combineReducers({reducer, reducer2, reducer3}));
 

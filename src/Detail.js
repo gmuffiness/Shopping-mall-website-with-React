@@ -25,6 +25,12 @@ function Detail(props) {
     let history = useHistory();
     let target_item = props.product.find(x => x.id === id);
 
+    function coupon_available(){
+        if( target_item["availableCoupon"] === undefined ){
+            console.log("hihi")
+        }
+    }
+
     return (
         <div className="container">
             
@@ -39,9 +45,14 @@ function Detail(props) {
 
                     <button className="btn btn-danger" onClick={()=>{
 
-                        let flag = false;
 
-                        props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price, flag : flag} });
+                        if( target_item["availableCoupon"] === undefined ){
+                            props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price, coupon : true } });
+                        
+                        } else{
+                            props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price, coupon : false } });
+                        }
+
                         history.push('/cart');
 
                     }}>장바구니</button>

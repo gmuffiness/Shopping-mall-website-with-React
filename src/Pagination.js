@@ -1,4 +1,5 @@
 import React from "react";
+import './App.css';
 
 const Pagination = ({ productsPerPage, totalProducts, paginate }) => {
   const pageNumber = [];
@@ -9,17 +10,18 @@ const Pagination = ({ productsPerPage, totalProducts, paginate }) => {
   }
 
   return (
-    <ul className="pagination">
+    <ul className="my-way">
       {pageNumber.map((pageNum) => (
         <li
           key={pageNum}
-          className="pagination_item"
+          className="my-way"
           onClick={() => paginate(pageNum)}
         >
-          {pageNum}
+          <a>{pageNum}</a>
         </li>
       ))}
     </ul>
+    
   );
 };
 

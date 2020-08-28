@@ -8,9 +8,9 @@ function Cart(props){
     let [clobtn, setClobtn] = useState(true);
     let [coupon, setCoupon] = useState(coupons);
     let [couponbtn,setCouponbtn] = useState("none");
-    let [fin_price, setFin_price] = useState(0);
+    let final = 0;
 
-    function handleChange(e, total) {
+    function handleChange(e) {
         if (e.target.value == "none"){
             setCouponbtn("none")
         } else if(e.target.value == "discountRate"){
@@ -20,15 +20,39 @@ function Cart(props){
         }
       }
 
-    function final_price(couponbtn, total){
+    // function final_price2(couponbtn, total_price){
+    //     // console.log("hihihis")
+    //     if (couponbtn === "none"){
+    //         final = total_price[0] + total_price[1]
+    //         return final // + total_price[1]
+
+    //     } else if (couponbtn === "discountRate"){
+    //         final = total_price[0] * 0.9 + total_price[1]
+    //         return final //* 0.9 + total_price[1]
+
+    //     } else{
+    //         final = total_price[0] + total_price[1] - 10000
+    //         return final //+ total_price[1]
+    //     }
+    // }
+
+    function final_price(couponbtn, total_price){
+        // console.log("hihihis")
         if (couponbtn === "none"){
-            return total
+            final = total_price
+            return final // + total_price[1]
+
         } else if (couponbtn === "discountRate"){
-            return total * 0.9
+            final = total_price * 0.9
+            return final //* 0.9 + total_price[1]
+
         } else{
-            return total - 10000
+            final = total_price - 10000
+            return final //+ total_price[1]
         }
     }
+
+
     return (
         <div>
             <Table responsive>
@@ -52,13 +76,14 @@ function Cart(props){
                                     <td>{ a.price }</td>
                                     <td>{ a.quan }</td>
                                     <td>
-                                        <button onClick={()=>{ props.dispatch({ type : 'quan_plus', payload : {id : a.id, i : i} }) }}>+</button>
-                                        <button onClick={()=>{ props.dispatch({ type : 'quan_minus', payload : {id : a.id, i : i} }) }}>-</button>
+                                        <button onClick={()=>{ props.dispatch({ type : 'quan_plus', payload : {id : a.id, i : i, price : a.price } }) }}>+</button>
+                                        <button onClick={()=>{ props.dispatch({ type : 'quan_minus', payload : {id : a.id, i : i, price : a.price } }) }}>-</button>
                                     </td>
                                     <td>
                                         <input type="checkbox" onChange={(e)=>{
                                             let checked = e.target.checked;
-                                            props.dispatch({ type: 'checked', payload : {id : a.id, i : i, price : a.price, quan : a.quan, checked : checked }})
+                                            props.dispatch({ type: 'checked', payload : {id : a.id, i : i, price : a.price, quan : a.quan, coupon : a.coupon, checked : checked }})
+            
                                          }}/>
                                     </td>
                                 </tr>
@@ -68,13 +93,16 @@ function Cart(props){
                 </tbody>
             </Table>
             
-            <select onChange={(e)=>{ handleChange(e, props.state_clicked) }}>
+            {/* {console.log(couponbtn, props.state_clicked)}
+            {console.log("why not!!!")} */}
+            <select onChange={(e)=>{ handleChange(e) }}>
                 <option value="none">--쿠폰--</option>
                 <option value="discountRate">{coupon[0].title}</option>
                 <option value="discountAmount">{coupon[1].title}</option>
                 
             </select>
-
+                    { console.log(couponbtn, props.state_clicked)}
+                    { console.log("yeah this is it")}
             <p>최종 결제 금액: { final_price( couponbtn, props.state_clicked ) }</p>
 
             <button onClick= {()=>{}}> 결제하기</button>
