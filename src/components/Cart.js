@@ -20,37 +20,37 @@ function Cart(props){
         }
       }
 
-    function final_price(couponbtn, total_price){
+    // function final_price(couponbtn, total_price){
 
+    //     if (couponbtn === "none"){
+    //         final = total_price
+    //         return final 
+
+    //     } else if (couponbtn === "discountRate"){
+    //         final = total_price * 0.9
+    //         return final 
+
+    //     } else{
+    //         final = total_price - 10000
+    //         return final
+    //     }
+    // }
+
+    function final_price2(couponbtn, total_price){
+        console.log("In final_price() :", total_price)
         if (couponbtn === "none"){
-            final = total_price
-            return final 
+            final = total_price[0] + total_price[1]
+            return final
 
         } else if (couponbtn === "discountRate"){
-            final = total_price * 0.9
-            return final 
+            final = total_price[0] * 0.9 + total_price[1]
+            return final
 
         } else{
-            final = total_price - 10000
+            final = total_price[0] + total_price[1] - 10000
             return final
         }
     }
-
-    // function final_price2(couponbtn, total_price){
-    //     // console.log("hihihis")
-    //     if (couponbtn === "none"){
-    //         final = total_price[0] + total_price[1]
-    //         return final // + total_price[1]
-
-    //     } else if (couponbtn === "discountRate"){
-    //         final = total_price[0] * 0.9 + total_price[1]
-    //         return final //* 0.9 + total_price[1]
-
-    //     } else{
-    //         final = total_price[0] + total_price[1] - 10000
-    //         return final //+ total_price[1]
-    //     }
-    // }
 
     return (
         <div>
@@ -98,9 +98,8 @@ function Cart(props){
                 <option value="discountAmount">{coupon[1].title}</option>
                 
             </select>
-                    { console.log(couponbtn, props.state_clicked)}
-                    { console.log("yeah this is it")}
-            <p>최종 결제 금액: { final_price( couponbtn, props.state_clicked ) }</p>
+                    { console.log("coupon state :", couponbtn, "/ reducer2 output :", props.state_clicked)}
+            <p>최종 결제 금액: { final_price2( couponbtn, props.state_clicked ) }</p>
 
             <button onClick= {()=>{}}> 결제하기</button>
             { clobtn === true

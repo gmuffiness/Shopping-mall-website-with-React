@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.css';
+
 import { BrowserRouter } from 'react-router-dom';
+
 import { Provider } from 'react-redux';
 import { createStore, combineReducers} from 'redux';
 
@@ -21,7 +22,7 @@ function reducer(state = init_val, action){
     let found = state.findIndex((a)=>{ return a.id === action.payload.id }); // init_val에 있는 id값과 눌렀을때 받은 id값이 일치하는 index
 
     if ( found >= 0  ){
-      let copy = [...state];
+      let copy = [...copy];
       copy[found].quan++;
       copy[found].flag = true;
       return copy  
@@ -39,13 +40,13 @@ function reducer(state = init_val, action){
       
     }
 
-  } else if ( action.type === 'quan_plus' ){
-
+  } else if ( action.type === 'quan_plus'){
+    
     let copy = [...state];
     copy[action.payload.i].quan++; // 여기서 payload 는 a.id => B9vUv0E0ibc0X55kVVLr 이런 문자열일 것.
     return copy
 
-  } else if ( action.type === 'quan_minus' ){
+  } else if ( action.type === 'quan_minus'){
 
     let copy = [...state];
     let found = state.findIndex((a)=>{ return a.id === action.payload.id });
@@ -59,39 +60,40 @@ function reducer(state = init_val, action){
     }
   
   } else{
-    return state 
+    return state
   }
 }
 
 let flag = false;
-let init_sum = 0;
+let init_sum = [0,0];
 
 function reducer2(state = init_sum, action){
 
+  let copy = [...state];
   if ( action.type === "checked" ){
 
     if (action.payload.checked){
       flag = true;
       console.log("flag")
       if (action.payload.coupon){
-        state = state + action.payload.price * action.payload.quan;
-        console.log(state)
-        return state
+        copy[0] = copy[0] + action.payload.price * action.payload.quan;
+        // console.log(copy)
+        return copy
       } else{
-        state = state + action.payload.price * action.payload.quan;
-        console.log(state)
-        return state
+        copy[1] = copy[1] + action.payload.price * action.payload.quan;
+        // console.log(copy)
+        return copy
       }
       
     } else{
       flag = false;
       if (action.payload.coupon){
-        state = state - action.payload.price * action.payload.quan;
-        return state
+        copy[0] = copy[0] - action.payload.price * action.payload.quan;
+        return copy
 
       } else{
-        state = state - action.payload.price * action.payload.quan;
-        return state
+        copy[1] = copy[1] - action.payload.price * action.payload.quan;
+        return copy
       }
     }
 
@@ -99,11 +101,11 @@ function reducer2(state = init_sum, action){
     console.log(flag)
     if (flag){
       console.log("flag4");
-      state += action.payload.price;
-      return state
+      copy[0] += action.payload.price;
+      return copy
 
     } else {
-      return state
+      return copy
     }
 
   } else if( action.type === 'quan_minus' ){
@@ -111,19 +113,18 @@ function reducer2(state = init_sum, action){
     console.log(flag)
     if (flag){
       console.log("flag4");
-      state -= action.payload.price;
-      return state
+      copy[0] -= action.payload.price;
+      return copy
 
     } else {
-      return state
+      return copy
     }
 
   } else{
     console.log("flag5")
-    return state
+    return copy
   }
 }
-
 
 let store = createStore(combineReducers({reducer, reducer2}));
 
