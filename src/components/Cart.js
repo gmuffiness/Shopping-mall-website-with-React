@@ -20,35 +20,25 @@ function Cart(props){
         }
       }
 
-    // function final_price(couponbtn, total_price){
-
-    //     if (couponbtn === "none"){
-    //         final = total_price
-    //         return final 
-
-    //     } else if (couponbtn === "discountRate"){
-    //         final = total_price * 0.9
-    //         return final 
-
-    //     } else{
-    //         final = total_price - 10000
-    //         return final
-    //     }
-    // }
-
-    function final_price2(couponbtn, total_price){
-        console.log("In final_price() :", total_price)
+    function final_price(couponbtn, total_price){
+        // console.log("In final_price() :", total_price)
         if (couponbtn === "none"){
             final = total_price[0] + total_price[1]
-            return final
+            return Math.floor(final)
 
         } else if (couponbtn === "discountRate"){
             final = total_price[0] * 0.9 + total_price[1]
-            return final
+            return Math.floor(final)
 
         } else{
-            final = total_price[0] + total_price[1] - 10000
-            return final
+            if(total_price[0] >= 10000){
+                final = total_price[0] - 10000 + total_price[1]
+                return Math.floor(final)
+            } else{
+                final = total_price[0] + total_price[1]
+                return Math.floor(final)
+            }
+
         }
     }
 
@@ -98,13 +88,12 @@ function Cart(props){
                 <option value="discountAmount">{coupon[1].title}</option>
                 
             </select>
-                    { console.log("coupon state :", couponbtn, "/ reducer2 output :", props.state_clicked)}
-            <p>최종 결제 금액: { final_price2( couponbtn, props.state_clicked ) }</p>
-
+                    {/* { console.log("coupon state :", couponbtn, "/ reducer2 output :", props.state_clicked)} */}
+            <p>최종 결제 금액: { final_price( couponbtn, props.state_clicked ) }</p>
             <button onClick= {()=>{}}> 결제하기</button>
             { clobtn === true
                 ? ( <div className="my-alert2">
-                        <p>지금 구매하시면 20% 할인됩니다!</p>
+                        <p>사상 최대 할인 쿠폰 적용 가능!</p>
                         <button onClick={()=>{ setClobtn(false) }}>닫기</button>
                     </div> )
                 : null

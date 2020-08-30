@@ -20,21 +20,23 @@ function reducer(state = init_val, action){
   if ( action.type === 'product_add'){
     
     let found = state.findIndex((a)=>{ return a.id === action.payload.id }); // init_val에 있는 id값과 눌렀을때 받은 id값이 일치하는 index
+    let copy = [...state];
 
     if ( found >= 0  ){
-      let copy = [...copy];
-      copy[found].quan++;
-      copy[found].flag = true;
-      return copy  
-    } else {
       
+      copy[found].quan++;
+      return copy  
+
+    } else {
+    
       if (state.length > 2){
         alert("장바구니에는 최대 3개의 상품이 담길 수 있습니다.");
         return state
-      } else{
-        let copy = [...state];
-        copy.push(action.payload);
 
+      } else{
+     
+        console.log("incart_check", copy)
+        copy.push(action.payload);
         return copy
       }
       
@@ -55,6 +57,8 @@ function reducer(state = init_val, action){
       copy[action.payload.i].quan--;
       return copy
     } else{
+      copy[found].incart = false;
+      console.log("incart_check2", copy[found].incart)
       copy.splice(found,1);
       return copy
     }
@@ -74,7 +78,7 @@ function reducer2(state = init_sum, action){
 
     if (action.payload.checked){
       flag = true;
-      console.log("flag")
+      console.log("checked")
       if (action.payload.coupon){
         copy[0] = copy[0] + action.payload.price * action.payload.quan;
         // console.log(copy)
@@ -87,6 +91,7 @@ function reducer2(state = init_sum, action){
       
     } else{
       flag = false;
+      console.log("NOT checked")
       if (action.payload.coupon){
         copy[0] = copy[0] - action.payload.price * action.payload.quan;
         return copy
@@ -98,7 +103,7 @@ function reducer2(state = init_sum, action){
     }
 
   } else if( action.type === 'quan_plus' ){
-    console.log(flag)
+    // console.log(flag)
     if (flag){
       console.log("flag4");
       copy[0] += action.payload.price;
@@ -110,7 +115,7 @@ function reducer2(state = init_sum, action){
 
   } else if( action.type === 'quan_minus' ){
     
-    console.log(flag)
+    // console.log(flag)
     if (flag){
       console.log("flag4");
       copy[0] -= action.payload.price;
@@ -122,7 +127,8 @@ function reducer2(state = init_sum, action){
 
   } else{
     console.log("flag5")
-    return copy
+    let state = [0,0];
+    return state
   }
 }
 

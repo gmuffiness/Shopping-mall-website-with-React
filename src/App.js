@@ -38,7 +38,7 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link as={Link} to="/products">Products</Nav.Link>
-            <Nav.Link as={Link} to="/cart/">Cart</Nav.Link>
+            {/* <Nav.Link as={Link} to="/cart/">Cart</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

@@ -15,12 +15,6 @@ function Detail(props) {
     let history = useHistory();
     let target_item = props.product.find(x => x.id === id);
 
-    function coupon_available(){
-        if( target_item["availableCoupon"] === undefined ){
-            console.log("hihi")
-        }
-    }
-
     return (
         <div className="container">
             
@@ -37,10 +31,10 @@ function Detail(props) {
 
 
                         if( target_item["availableCoupon"] === undefined ){
-                            props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price, coupon : true } });
+                            props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price, coupon : true, incart : true } });
                         
                         } else{
-                            props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price, coupon : false } });
+                            props.dispatch({type : 'product_add', payload : {id:target_item.id, name : target_item.title, quan : 1, price : target_item.price, coupon : false, incart : true } });
                         }
 
                         history.push('/cart');
