@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Nav } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import '../Detail.scss';
 
 import { CSSTransition } from 'react-transition-group';
@@ -20,7 +19,7 @@ function Detail(props) {
             
             <div className="row">
                 <div className="col-md-6">
-                    <img src={ target_item.coverImage } width="100%" />
+                    <img src={ target_item.coverImage } width="100%" alt=""/>
                 </div>
                 <div className="col-md-6 mt-4">
                     <h4 className="pt-5">{target_item.title}</h4>

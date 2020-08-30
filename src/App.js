@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { Navbar, Nav, Button, Jumbotron} from 'react-bootstrap';
+import { Link, Route, useHistory } from 'react-router-dom';
 import './App.css';
 import {productItems} from './productItems.js';
-import Detail from './components/Detail.js';
-import Cart from './components/Cart.js';
-import Products from './components/Products.js';
-import Pagination from './components/Pagination.js';
-
-import { Link, Route, useHistory } from 'react-router-dom';
+let Detail = lazy( () => import('./components/Detail.js') );
+let Cart = lazy( () => import('./components/Cart.js') );
+let Products = lazy( () => import('./components/Products.js') );
+let Pagination = lazy( () => import('./components/Pagination.js') );
+// import Detail from './components/Detail.js';
+// import Cart from './components/Cart.js';
+// import Products from './components/Products.js';
+// import Pagination from './components/Pagination.js';
 
 function App() {
 
@@ -70,18 +73,23 @@ function App() {
       </Route>
 
       <Route exact path="/products">
-
-        <Products product={currentProducts} />
-        <Pagination productsPerPage={productsPerPage} totalProducts={product.length} paginate={paginate} />
+        <Suspense fallback={<div>로딩중 ...</div>}>
+          <Products product={currentProducts} />
+          <Pagination productsPerPage={productsPerPage} totalProducts={product.length} paginate={paginate} />
+        </Suspense>
       </Route>
 
 
       <Route path="/detail/:id">
-        <Detail product={product}/>
+        <Suspense fallback={<div>로딩중 ...</div>}>
+          <Detail product={product}/>
+        </Suspense>
       </Route>
 
       <Route path="/cart">
-        <Cart />
+        <Suspense fallback={<div>로딩중 ...</div>}>
+          <Cart/>
+        </Suspense>
       </Route>
 
     </div>
@@ -94,7 +102,7 @@ function Card(props){
   return (
     <div className="col-md-4" onClick={()=>{ history.push('/detail/' + props.product.id) }}>
 
-      <img src={ props.product.coverImage} width="100%" height="70%"/>
+      <img src={ props.product.coverImage} width="100%" height="70%" alt=""/>
       <h4>{ props.product.title}</h4>
       <p>{ props.product.price}원</p>
     </div>

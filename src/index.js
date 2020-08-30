@@ -34,8 +34,6 @@ function reducer(state = init_val, action){
         return state
 
       } else{
-     
-        console.log("incart_check", copy)
         copy.push(action.payload);
         return copy
       }
@@ -56,9 +54,9 @@ function reducer(state = init_val, action){
     if (copy[action.payload.i].quan > 1 ){
       copy[action.payload.i].quan--;
       return copy
+
     } else{
       copy[found].incart = false;
-      console.log("incart_check2", copy[found].incart)
       copy.splice(found,1);
       return copy
     }
@@ -78,20 +76,19 @@ function reducer2(state = init_sum, action){
 
     if (action.payload.checked){
       flag = true;
-      console.log("checked")
+      // console.log("checked")
       if (action.payload.coupon){
         copy[0] = copy[0] + action.payload.price * action.payload.quan;
-        // console.log(copy)
         return copy
+
       } else{
         copy[1] = copy[1] + action.payload.price * action.payload.quan;
-        // console.log(copy)
         return copy
       }
       
     } else{
       flag = false;
-      console.log("NOT checked")
+      // console.log("NOT checked")
       if (action.payload.coupon){
         copy[0] = copy[0] - action.payload.price * action.payload.quan;
         return copy
@@ -103,9 +100,9 @@ function reducer2(state = init_sum, action){
     }
 
   } else if( action.type === 'quan_plus' ){
-    // console.log(flag)
+
     if (flag){
-      console.log("flag4");
+
       copy[0] += action.payload.price;
       return copy
 
@@ -115,9 +112,9 @@ function reducer2(state = init_sum, action){
 
   } else if( action.type === 'quan_minus' ){
     
-    // console.log(flag)
+
     if (flag){
-      console.log("flag4");
+
       copy[0] -= action.payload.price;
       return copy
 
@@ -126,7 +123,7 @@ function reducer2(state = init_sum, action){
     }
 
   } else{
-    console.log("flag5")
+
     let state = [0,0];
     return state
   }

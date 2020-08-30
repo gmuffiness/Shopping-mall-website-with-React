@@ -8,7 +8,6 @@ function Products(props) {
   let history = useHistory();
 
   function button_state(product, a, i){ // 여기서 product는 원래 데이터, a는 cart에 담긴 data
-    // console.log("a.incart : ", a)
     
     if( a.find((data)=>{return product.id === data.id}) === undefined ){
       return <button className="btn btn-danger" onClick={()=>{
@@ -26,7 +25,6 @@ function Products(props) {
     } else{
       return <button className="btn btn-danger" onClick={()=>{
 
-        console.log(a)
         if( a["availableCoupon"] === undefined ){
           props.dispatch({ type : 'quan_minus', payload : {id : product.id, i:i, price : product.price, coupon : true } });
 
@@ -54,7 +52,7 @@ function Products(props) {
 
           <div className="container">
             <div className="col" onClick={()=>{ history.push('/detail/' + a.id) }}>
-              <img src={ a.coverImage} width="50%" height="35%"/>
+              <img src={ a.coverImage} width="50%" height="35%" alt=""/>
               <h4>{ a.title}</h4> 
               <p>{ a.price}원</p>
             </div>
